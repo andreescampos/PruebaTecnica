@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*log
+
+# IDE - VSCode
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# local .env file
+.env
+
+# System Files
+.DS_Store
+Thumbs.db
