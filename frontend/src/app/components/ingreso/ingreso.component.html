@@ -1,0 +1,93 @@
+<app-navbar></app-navbar>
+
+
+
+<div class="container my-4 d-flex justify-content-center">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+
+
+    <div>
+
+      <mat-card>
+        <mat-card-title>Ingresos</mat-card-title>
+        <mat-card-content>
+
+          <mat-form-field class="form-element">
+            <mat-select placeholder="Tipo taza" formControlName="id_tipo">
+                <mat-option *ngFor="let tipo of tipoTazas" [value]="tipo.id">{{tipo.descripcion}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="!formGroup.controls['id_tipo'].valid && formGroup.controls['id_tipo'].touched">
+              Debe seleccionar un tipo de taza
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field class="form-element">
+            <mat-label>Color</mat-label>
+            <input matInput placeholder="Escriba el color de la taza" formControlName="color">
+            <mat-error *ngIf="!formGroup.controls['color'].valid && formGroup.controls['color'].touched">
+              Debe escribir un color
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-element">
+            <mat-label>Dimensiones</mat-label>
+            <input matInput placeholder="Escriba las dimensiones de la taza" formControlName="dimensiones">
+            <span matSuffix>milímetros</span>
+            <mat-error *ngIf="!formGroup.controls['dimensiones'].valid && formGroup.controls['dimensiones'].touched">
+              Debe escribir las dimensiones
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-element">
+            <mat-label>Capacidad</mat-label>
+            <input matInput placeholder="Escriba la capacidad de la taza" formControlName="capacidad">
+            <span matSuffix>mililitros</span>
+            <mat-error *ngIf="!formGroup.controls['capacidad'].valid && formGroup.controls['capacidad'].touched">
+              Debe escribir la capacidad
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-element">
+            <mat-label>Modelo</mat-label>
+            <input matInput placeholder="Escriba el modelo de la taza" formControlName="modelo">
+            <mat-error *ngIf="!formGroup.controls['modelo'].valid && formGroup.controls['modelo'].touched">
+              Debe escribir el modelo
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-element">
+            <mat-label>Material</mat-label>
+            <input matInput placeholder="Escriba el material de la taza" formControlName="material">
+            <mat-error *ngIf="!formGroup.controls['material'].valid && formGroup.controls['material'].touched">
+              Debe escribir el material
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field class="form-element">
+            <mat-label>Número de piezas</mat-label>
+            <input matInput placeholder="Escriba el numero de piezas a añadir" formControlName="piezas" type="number" min="1">
+            <mat-error *ngIf="!formGroup.controls['piezas'].valid && formGroup.controls['piezas'].touched">
+              Debes escribir la cantidad de piezas a añadir
+            </mat-error>
+          </mat-form-field>
+
+          
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="form-element">
+            <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!formGroup.valid">
+              Registrar nueva taza
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+
+
+
+
+  </form>
+</div>

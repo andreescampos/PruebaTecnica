@@ -1,0 +1,14 @@
+POST http://localhost:3000/api/taza HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_tipo": 2,
+    "color": "Verde",
+    "dimensiones": "165",
+    "capacidad": "800",
+    "modelo": "ERTG-2",
+    "material": "Cerámica",
+    "piezas": 100
+}
+
+GET http://localhost:3000/api/taza/all HTTP/1.1
