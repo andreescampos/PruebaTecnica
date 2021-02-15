@@ -1,0 +1,177 @@
+<app-navbar></app-navbar>
+<div class="container">
+
+    <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step>
+            <ng-template matStepLabel>Selecciona las tazas</ng-template>
+            <div class="row">
+                <div class="col-sm-4" *ngFor="let taza of tazasParaMostrar">
+                    <mat-card class="mt-4">
+                        <mat-card-header>
+                            <mat-card-title>Modelo: {{taza.modelo}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>
+                                <mat-icon>download_done</mat-icon><b>Tipo: </b>{{taza.descripcion}}
+                            </p>
+                            <p>
+                                <mat-icon>palette</mat-icon><b>Color: </b>{{taza.color}}
+                            </p>
+                            <p>
+                                <mat-icon>square_foot</mat-icon><b>Dimensiones: </b>{{taza.dimensiones}} mm
+                            </p>
+                            <p>
+                                <mat-icon>coffee</mat-icon><b>Capacidad: </b>{{taza.capacidad}} ml
+                            </p>
+                            <p>
+                                <mat-icon>hardware</mat-icon><b>Material: </b>{{taza.material}}
+                            </p>
+                            <p>
+                                <mat-icon>inventory_2</mat-icon><b>Unidades disponibles: </b>{{taza.piezas}}
+                            </p>
+                            <div class="text-center">
+                                <p class="precio">Precio: {{taza.precio | currency}}</p>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <mat-form-field class="form-element">
+                                <mat-label>Cantidad a comprar</mat-label>
+                                <input matInput placeholder="Cantidad de unidades a comprar" type="number" min="0" value="0"
+                                    [max]="taza.piezas" [name]="taza.modelo" (keyup)="onKey($event)"
+                                    (change)="onItemValueChange($event)">
+                                <mat-icon matSuffix>add_shopping_cart</mat-icon>
+                            </mat-form-field>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+        
+        
+            </div>
+            <div class="row">
+                <mat-paginator (page)="onPageChange($event)" [length]="tazas.length" [pageSize]=6
+                    [pageSizeOptions]="[6, 9, 12]">
+                </mat-paginator>
+            </div>
+        
+            <div class="text-center m-5">
+                <p class="total">Total: {{obtenerTotal() | currency}}</p>
+            </div>
+        
+            <div class="row">
+                <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Promoción</ng-template>
+            <div class="row" style="background-color: aliceblue;">
+                <div class="col-sm-6">
+                    <p style="font-weight: bold;">Por promoción:</p>
+                    <ul>
+                        <li>En la compra de cada 10 tazas de alta calidad se regalarán 3 tazas de baja calidad.</li>
+                        <li>En la compra de cada 10 tazas de baja calidad se regalarán 2 tazas de baja calidad.</li>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <p style="font-weight: bold;">Selecciona: </p>
+                    <ul>
+                        <li>{{obtenerPromocion()}} tazas de baja calidad</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4" *ngFor="let taza of tazasBajaCalidad">
+                    <mat-card class="mt-4">
+                        <mat-card-header>
+                            <mat-card-title>Modelo: {{taza.modelo}}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p>
+                                <mat-icon>download_done</mat-icon><b>Tipo: </b>{{taza.descripcion}}
+                            </p>
+                            <p>
+                                <mat-icon>palette</mat-icon><b>Color: </b>{{taza.color}}
+                            </p>
+                            <p>
+                                <mat-icon>square_foot</mat-icon><b>Dimensiones: </b>{{taza.dimensiones}} mm
+                            </p>
+                            <p>
+                                <mat-icon>coffee</mat-icon><b>Capacidad: </b>{{taza.capacidad}} ml
+                            </p>
+                            <p>
+                                <mat-icon>hardware</mat-icon><b>Material: </b>{{taza.material}}
+                            </p>
+                            <p>
+                                <mat-icon>inventory_2</mat-icon><b>Unidades disponibles: </b>{{taza.piezas}}
+                            </p>
+                            <div class="text-center">
+                                <p class="precio">Precio: {{taza.precio | currency}}</p>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <mat-form-field class="form-element">
+                                <mat-label>Cantidad</mat-label>
+                                <input matInput placeholder="Cantidad de unidades de promocion" type="number" min="0" value="0"
+                                    [max]="taza.piezas" [name]="taza.modelo" (keyup)="onKey($event)"
+                                    (change)="onItemPromocionValueChange($event)">
+                                <mat-icon matSuffix>add_shopping_cart</mat-icon>
+                            </mat-form-field>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+        
+        
+            </div>
+        
+            <div class="text-center m-5">
+                <p class="total">Total: {{obtenerTotal() | currency}}</p>
+            </div>
+        
+            <div class="row">
+                <button mat-raised-button color="primary" class="mr-2" matStepperPrevious>Atrás</button>
+                <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Finalizar pedido</ng-template>
+            <div>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let taza of obtenerTazasPedido()">
+                            <td>{{taza.modelo}}</td>
+                            <td>{{taza.descripcion}}</td>
+                            <td>{{taza.cantidad}}</td>
+                            <td>{{taza.precio | currency}}</td>
+                            <td>{{(taza.precio * taza.cantidad) | currency}}</td>
+                        </tr>
+                        <tr *ngFor="let taza of obtenerTazasPromocion()">
+                            <td>{{taza.modelo}}</td>
+                            <td>{{taza.descripcion}}</td>
+                            <td>{{taza.cantidadPromo}}</td>
+                            <td>{{0 | currency}}</td>
+                            <td>{{0 | currency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button mat-raised-button color="accent" (click)="registrarPedido()" class="button">
+                   Terminar Pedido
+                  </button>
+            </div>
+            <div class="row">
+                <button mat-raised-button color="primary" class="mr-2" matStepperPrevious>Atrás</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+    
+
+</div>

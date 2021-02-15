@@ -1,0 +1,9 @@
+{
+    "name": "prueba-tecnica",
+    "version": "1.0.0",
+    "scripts": {
+        "frontend": "cd frontend && ng serve",
+        "backend": "cd backend && npm run start:dev",
+        "install": "cd backend && npm install && cd .. && cd frontend && npm install"
+    }
+}

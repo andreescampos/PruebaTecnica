@@ -1,0 +1,10 @@
+.precio {
+    font-size: large;
+    font-weight: bold;
+    color: #641E16;
+}
+
+.total {
+    font-size: 30px;
+    font-weight: bold;
+}

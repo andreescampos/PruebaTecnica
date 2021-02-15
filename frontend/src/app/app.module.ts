@@ -8,11 +8,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { LoginComponent } from './components/login/login.component';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
 import { IngresoComponent } from './components/ingreso/ingreso.component';
+import { EgresosComponent } from './components/egresos/egresos.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
@@ -21,6 +22,15 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatButtonModule} from '@angular/material/button';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatCardModule} from '@angular/material/card';
+
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatIconModule} from '@angular/material/icon';
+import {MatStepperModule} from '@angular/material/stepper';
+
+
+
+
 
 
 
@@ -32,8 +42,8 @@ import { MatCardModule} from '@angular/material/card';
     HomeComponent,
     NavbarComponent,
     PageNotFoundComponent,
-    LoginComponent,
-    IngresoComponent
+    IngresoComponent,
+    EgresosComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +60,10 @@ import { MatCardModule} from '@angular/material/card';
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
+    MatGridListModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatStepperModule,
     ToastrModule.forRoot(),
   ],
   providers: [],

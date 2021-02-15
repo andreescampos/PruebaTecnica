@@ -2,15 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { TipoTaza } from '../models/tipoTaza';
 import { HttpOptionsService } from './http-options.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TazaService {
+export class PedidoService {
 
-  private endpointUrl = environment.apiUrl + '/taza';
+  private endpointUrl = environment.apiUrl + '/pedido';
 
   constructor(
     private http: HttpClient,
@@ -20,14 +19,8 @@ export class TazaService {
   public userTokenKey = 'user-token';
   public sessionInfoKey = 'session-info';
 
-
-
-  postTazaRequest(request): Observable<any> {
+  postPedidoRequest(request): Observable<any> {
     return this.http.post<any>(this.endpointUrl, request, this.httpOptions);
-  }
-i
-  getTazasRequest(): Observable<any> {
-    return this.http.get<any>(this.endpointUrl + '/all', this.httpOptions);
   }
 
 

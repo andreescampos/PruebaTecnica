@@ -11,7 +11,8 @@ const logger = new Logger();
 /**
  * Petición para agregar una taza a la Base de Datos
  * @param req 
- * @param res 
+ * @param res
+ * @returns Promise<any>
  */
 export const agregarTaza = async (req: Request, res: Response): Promise<any> => {
 
@@ -37,7 +38,7 @@ export const agregarTaza = async (req: Request, res: Response): Promise<any> => 
                     "mensaje": 'Error al registrar los datos',
                 });
         }
-        
+
         //Inicia la transacción
         connection.beginTransaction(err => {
             if (err) {
@@ -121,6 +122,12 @@ export const agregarTaza = async (req: Request, res: Response): Promise<any> => 
 
 }
 
+/**
+ * Petición para obtener las tazas de la Base de Datos
+ * @param req 
+ * @param res
+ * @returns Promise<any>
+ */
 export const obtenerTazas = async (req: Request, res: Response): Promise<any> => {
     mysqlPool.query(
         `
@@ -131,7 +138,8 @@ export const obtenerTazas = async (req: Request, res: Response): Promise<any> =>
             taza.dimensiones, 
             taza.capacidad, 
             taza.modelo, 
-            taza.material, 
+            taza.material,
+            taza.precio,
             inventario.piezas
         FROM
 	        taza

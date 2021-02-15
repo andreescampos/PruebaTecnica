@@ -1,4 +1,3 @@
-import { NumberSymbol } from "@angular/common";
 
 export interface Taza {
     id: number;
@@ -10,4 +9,7 @@ export interface Taza {
     modelo: string;
     material: string;
     piezas: number;
+    precio: number;
+    cantidad?: number;
+    cantidadPromo?: number;
 }
