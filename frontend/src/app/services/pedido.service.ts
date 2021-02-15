@@ -23,5 +23,13 @@ export class PedidoService {
     return this.http.post<any>(this.endpointUrl, request, this.httpOptions);
   }
 
+  getPedidosRequest(): Observable<any> {
+    return this.http.get<any>(this.endpointUrl, this.httpOptions);
+  }
+
+  getPedidosByIDRequest(id: number): Observable<any> {
+    return this.http.get<any>(this.endpointUrl + '/' + id, this.httpOptions);
+  }
+
 
 }

@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+
+<div class="container my-5">
+    <h1 class="text-center">VER PEDIDO: {{this.idpedido}}</h1>
+</div>
+
+<div class="container my-5" style="background-color: aliceblue;">
+    <div class="row" style="background-color: white;">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>MODELO</th>
+                    <th>COLOR</th>
+                    <th>CANTIDAD</th>
+                    <th>PRECIO</th>
+                    <th>PRECIO TOTAL</th>
+                </tr>
+            </thead>
+            <thead>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let taza of detallespedido; let i = index">
+                    <td>{{ taza.modelo }}</td>
+                    <td>{{ taza.color }}</td>
+                    <td> {{taza.cantidad}} </td>
+                    <td>{{ taza.precio | currency: 'MXN'}}</td>
+                    <td>{{ taza.precio*taza.cantidad | currency: 'MXN'}}</td>
+                </tr>
+            </tbody>
+            <tr>
+                <td align="right" colspan="6">
+                    <h4 class="font-weight-bold">TOTAL: {{total | currency: 'MXN'}}</h4>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

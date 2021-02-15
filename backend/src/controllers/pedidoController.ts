@@ -131,29 +131,10 @@ export const agregarPedido = async (req: Request, res: Response): Promise<any> =
  * @param res
  * @returns Promise<any>
  */
-export const obtenerTazas = async (req: Request, res: Response): Promise<any> => {
+export const obtenerPedidos = async (req: Request, res: Response): Promise<any> => {
     mysqlPool.query(
         `
-        SELECT
-            taza.id, 
-            tipo_taza.descripcion, 
-            taza.color, 
-            taza.dimensiones, 
-            taza.capacidad, 
-            taza.modelo, 
-            taza.material,
-            taza.precio,
-            inventario.piezas
-        FROM
-	        taza
-	    INNER JOIN
-	        tipo_taza
-	    ON 
-		    taza.id_tipo = tipo_taza.id
-	    INNER JOIN
-	        inventario
-	    ON 
-		taza.id = inventario.id_taza
+        SELECT * FROM pedido
         `,
         (err: QueryError, rows: RowDataPacket[]) => {
             if (err) {
@@ -166,5 +147,33 @@ export const obtenerTazas = async (req: Request, res: Response): Promise<any> =>
             return res.status(StatusCodes.OK).json(rows)
         });
 
+
+}
+
+export const obtenerPedidoFromID = async (req: Request, res: Response): Promise<any> => {
+    const id = req.params.id;
+
+    mysqlPool.query(`SELECT
+                    detalle_pedido.id_taza, 
+                    detalle_pedido.cantidad, 
+                    detalle_pedido.precio, 
+                    taza.modelo, 
+                    taza.color
+                FROM
+                    detalle_pedido
+                    INNER JOIN
+                    taza
+                ON 
+                    detalle_pedido.id_taza = taza.id WHERE detalle_pedido.id_pedido = ?`, [id],
+        (err, rows) => {
+            if (err) {
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+                    {
+                        "mensaje": 'Error al obtener los datos',
+                    });
+            }
+
+            return res.status(StatusCodes.OK).json(rows)
+        });
 
 }
