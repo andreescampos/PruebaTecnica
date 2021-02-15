@@ -12,12 +12,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { IngresoComponent } from './components/ingreso/ingreso.component';
+import { AgregarTazaComponent } from './components/taza/taza.component';
 import { EgresosComponent } from './components/egresos/egresos.component';
 import { ListaPedidosComponent } from './components/pedidos/lista-pedidos/lista-pedidos.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { IngresosComponent } from './components/ingresos/ingresos.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/detalle-pedido.component';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,7 +33,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
-import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/detalle-pedido.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+
+
+
 
 
 
@@ -48,11 +53,12 @@ import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/deta
     AppComponent,
     HomeComponent,
     NavbarComponent,
-    PageNotFoundComponent,
-    IngresoComponent,
+    AgregarTazaComponent,
     EgresosComponent,
     ListaPedidosComponent,
-    DetallePedidoComponent
+    DetallePedidoComponent,
+    PageNotFoundComponent,
+    IngresosComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +80,7 @@ import { DetallePedidoComponent } from './components/pedidos/detalle-pedido/deta
     MatIconModule,
     MatStepperModule,
     MatTableModule,
+    MatExpansionModule,
     ToastrModule.forRoot(),
   ],
   providers: [

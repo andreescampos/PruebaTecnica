@@ -7,11 +7,11 @@ import { TipoTazaService } from 'src/app/services/tipoTaza.service';
 import { TazaService } from '../../services/taza.service';
 
 @Component({
-  selector: 'app-ingreso',
-  templateUrl: './ingreso.component.html',
-  styleUrls: ['./ingreso.component.css']
+  selector: 'app-agregartaza',
+  templateUrl: './taza.component.html',
+  styleUrls: ['./taza.component.css']
 })
-export class IngresoComponent implements OnInit {
+export class AgregarTazaComponent implements OnInit {
 
 
 

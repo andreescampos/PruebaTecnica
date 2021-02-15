@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+
+<div class="container my-5">
+    <h1 class="text-center">Ingresos a almacén</h1>
+</div>
+
+<div class="container">
+    <mat-accordion>
+        <mat-expansion-panel hideToggle *ngFor="let taza of tazas">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Modelo: {{taza.modelo}}
+            </mat-panel-title>
+            <mat-panel-description>
+              Unidades: {{taza.piezas}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            
+
+            <mat-form-field class="form-element">
+                <mat-label>Color</mat-label>
+                <input matInput placeholder="Color" disabled [value]="taza.color">
+            </mat-form-field>
+
+            <div></div>
+
+            <mat-form-field class="form-element">
+                <mat-label>Dimensiones</mat-label>
+                <input matInput placeholder="Dimensiones" disabled [value]="taza.dimensiones">
+                <span matSuffix>milímetros</span>
+            </mat-form-field>
+
+            <div></div>
+
+            <mat-form-field class="form-element">
+                <mat-label>Capacidad</mat-label>
+                <input matInput placeholder="Capacidad" disabled [value]="taza.capacidad">
+                <span matSuffix>mililitros</span>
+            </mat-form-field>
+
+            <div></div>
+
+            <mat-form-field class="form-element">
+                <mat-label>Unidades actuales</mat-label>
+                <input matInput placeholder="Unidades disponibles" disabled [value]="taza.piezas">
+            </mat-form-field>
+
+            <div></div>
+
+            <mat-form-field class="form-element">
+              <mat-label>Unidades a ingresar</mat-label>
+              <input matInput placeholder="Unidades a ingresar" [name]="taza.id.toString()" [id]="taza.id.toString()" value="0">
+          </mat-form-field>
+
+          <div>
+            <button mat-button color="primary" (click)="realizarRegistro(taza.id.toString())">Realizar registro</button>
+          </div>
+
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>

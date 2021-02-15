@@ -25,9 +25,13 @@ export class TazaService {
   postTazaRequest(request): Observable<any> {
     return this.http.post<any>(this.endpointUrl, request, this.httpOptions);
   }
-i
+
   getTazasRequest(): Observable<any> {
     return this.http.get<any>(this.endpointUrl + '/all', this.httpOptions);
+  }
+
+  postIngresoRequest(request): Observable<any> {
+    return this.http.post<any>(this.endpointUrl + '/ingreso', request, this.httpOptions);
   }
 
 

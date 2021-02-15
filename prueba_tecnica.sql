@@ -11,7 +11,7 @@
  Target Server Version : 50173
  File Encoding         : 65001
 
- Date: 15/02/2021 08:49:18
+ Date: 15/02/2021 14:26:56
 */
 
 SET NAMES utf8;
@@ -51,9 +51,25 @@ INSERT INTO `detalle_pedido` VALUES (34, 35, 1, 1, 14.22);
 INSERT INTO `detalle_pedido` VALUES (35, 35, 2, 2, 13.12);
 INSERT INTO `detalle_pedido` VALUES (36, 35, 3, 10, 8.54);
 INSERT INTO `detalle_pedido` VALUES (37, 35, 8, 3, 0);
-INSERT INTO `detalle_pedido` VALUES (38, 36, 2, 0, 13.12);
+INSERT INTO `detalle_pedido` VALUES (38, 36, 2, 1, 13.12);
 INSERT INTO `detalle_pedido` VALUES (39, 36, 3, 10, 8.54);
 INSERT INTO `detalle_pedido` VALUES (40, 36, 2, 3, 0);
+
+-- ----------------------------
+-- Table structure for historial_inventario
+-- ----------------------------
+DROP TABLE IF EXISTS `historial_inventario`;
+CREATE TABLE `historial_inventario`  (
+  `id_taza` int(11) NULL DEFAULT NULL,
+  `unidades_ingresadas` int(11) NULL DEFAULT NULL,
+  `fecha` date NULL DEFAULT NULL,
+  `hora` time NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of historial_inventario
+-- ----------------------------
+INSERT INTO `historial_inventario` VALUES (2, 40, '2021-02-15', '14:26:33');
 
 -- ----------------------------
 -- Table structure for inventario
@@ -67,18 +83,19 @@ CREATE TABLE `inventario`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id_taza`(`id_taza`) USING BTREE,
   CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`id_taza`) REFERENCES `taza` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of inventario
 -- ----------------------------
-INSERT INTO `inventario` VALUES (1, 1, 0, '2021-02-14 13:29:24');
-INSERT INTO `inventario` VALUES (2, 2, 500, '2021-02-14 13:40:59');
+INSERT INTO `inventario` VALUES (1, 1, 10, '2021-02-14 13:29:24');
+INSERT INTO `inventario` VALUES (2, 2, 590, '2021-02-14 13:40:59');
 INSERT INTO `inventario` VALUES (3, 3, 30, '2021-02-14 13:42:14');
 INSERT INTO `inventario` VALUES (4, 4, 100, '2021-02-14 14:02:43');
 INSERT INTO `inventario` VALUES (5, 6, 300, '2021-02-14 21:07:25');
 INSERT INTO `inventario` VALUES (6, 7, 200, '2021-02-14 21:07:56');
 INSERT INTO `inventario` VALUES (7, 8, 40, '2021-02-14 21:08:34');
+INSERT INTO `inventario` VALUES (15, 9, 120, '2021-02-15 09:22:22');
 
 -- ----------------------------
 -- Table structure for pedido
@@ -117,7 +134,7 @@ CREATE TABLE `taza`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `modelo`(`modelo`) USING BTREE,
   INDEX `id_tipo`(`id_tipo`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of taza
@@ -129,6 +146,7 @@ INSERT INTO `taza` VALUES (4, 2, 'Verde', '165', '800', 'ERTG-2', 'Plástico', 1
 INSERT INTO `taza` VALUES (6, 2, 'Rosa', '165', '800', 'ERFF-8', 'Cerámica', 16.78);
 INSERT INTO `taza` VALUES (7, 2, 'Morada', '120', '400', 'MNBH-7', 'Cerámica', 9.5);
 INSERT INTO `taza` VALUES (8, 2, 'Verde', '150', '500', 'AAGY-3', 'Vidrio', 16.24);
+INSERT INTO `taza` VALUES (9, 2, 'Café', '180', '350', 'GVBH-2', 'Plástico', 12.33);
 
 -- ----------------------------
 -- Table structure for tipo_taza

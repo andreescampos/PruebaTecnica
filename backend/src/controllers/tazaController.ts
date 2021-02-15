@@ -1,6 +1,6 @@
 import { mysqlPool } from "@shared/constants";
 import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
+import { NETWORK_AUTHENTICATION_REQUIRED, StatusCodes } from "http-status-codes";
 import Logger from "jet-logger";
 import { QueryError, RowDataPacket, OkPacket, FieldPacket } from "mysql2/typings/mysql";
 import { tazaValidator } from "src/validators/tazaValidator";
@@ -153,16 +153,119 @@ export const obtenerTazas = async (req: Request, res: Response): Promise<any> =>
 	    ON 
 		taza.id = inventario.id_taza
         `,
-     (err: QueryError, rows:RowDataPacket[]) => {
-        if(err){
+        (err: QueryError, rows: RowDataPacket[]) => {
+            if (err) {
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+                    {
+                        "mensaje": 'Error al obtener los datos',
+                    });
+            }
+
+            return res.status(StatusCodes.OK).json(rows)
+        });
+
+
+}
+
+/**
+ * Petición para ingresar tazas a almacen
+ * @param req 
+ * @param res
+ * @returns Promise<any>
+ */
+export const ingresarTazas = async (req: Request, res: Response): Promise<any> => {
+    const id_taza = req.body.id_taza;
+    const unidades = req.body.unidades;
+
+    mysqlPool.getConnection((err, connection) => {
+        if (err) {
+            logger.err(err.message)
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
                 {
-                    "mensaje": 'Error al obtener los datos',
-            });
+                    "mensaje": 'Error al registrar los datos',
+                });
         }
 
-        return res.status(StatusCodes.OK).json(rows)
+        //Inicia la transacción
+        connection.beginTransaction(err => {
+            if (err) {
+                connection.rollback(() => {
+                    logger.err(err.message)
+                })
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+                    {
+                        "mensaje": 'Error al registrar los datos',
+                    });
+            }
+
+
+            connection.query("SELECT piezas FROM inventario WHERE id_taza= ?", [id_taza], (err, result) => {
+                if (err) {
+                    connection.rollback(() => {
+                        logger.err(err.message)
+                    })
+                    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+                        {
+                            "mensaje": 'Error al registrar los datos',
+                        });
+                }
+
+                const piezasActuales = (result as RowDataPacket[])[0].piezas;
+                console.log('piezas actuales: ' + piezasActuales);
+
+                var unidadesTotales = unidades + piezasActuales; 
+                
+                connection.query("UPDATE inventario SET piezas = ? WHERE id_taza = ?", [unidadesTotales,id_taza], (err) => {
+                    if (err) {
+                        connection.rollback(() => {
+                            logger.err(err.message)
+                        })
+                        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+                            {
+                                "mensaje": 'Error al registrar los datos',
+                            });
+                    }
+                    var NOW = { toSqlString: function() { return 'NOW()'; } };
+                    connection.query("INSERT INTO historial_inventario(id_taza, unidades_ingresadas, fecha, hora) VALUES (?,?,?,?) ", 
+                    [id_taza, unidades, NOW, NOW], (err) => {
+                        if (err) {
+                            connection.rollback(() => {
+                                logger.err(err.message)
+                            })
+                            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+                                {
+                                    "mensaje": 'Error al registrar los datos',
+                                });
+                        }
+
+
+
+                        connection.commit((err) => {
+                        if (err) {
+                            connection.rollback(() => {
+                                logger.err(err.message)
+                            })
+                            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+                                {
+                                    "mensaje": 'Error al registrar los datos',
+                                });
+                        }
+
+                        return res.status(StatusCodes.OK).json(
+                            {
+                                "mensaje": 'Datos guardados satisfactoriamente',
+                            });
+
+                    })
+                    });
+
+                    
+
+                    
+
+                });
+
+            })
+        });
     });
-
-
 }
