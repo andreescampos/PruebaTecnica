@@ -53,16 +53,17 @@ export const agregarTaza = async (req: Request, res: Response): Promise<any> => 
 
             connection.execute(
                 `INSERT INTO taza
-                (id_tipo,color,dimensiones,capacidad, modelo, material)
+                (id_tipo,color,dimensiones,capacidad, modelo, material, precio)
             VALUES
-                (?,?,?,?,?,?)`,
+                (?,?,?,?,?,?,?)`,
                 [
                     nuevaTaza.id_tipo,
                     nuevaTaza.color,
                     nuevaTaza.dimensiones,
                     nuevaTaza.capacidad,
                     nuevaTaza.modelo,
-                    nuevaTaza.material
+                    nuevaTaza.material,
+                    nuevaTaza.precio
                 ], (err, result) => {
                     if (err) {
                         connection.rollback(() => {

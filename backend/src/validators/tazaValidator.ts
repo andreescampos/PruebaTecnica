@@ -8,4 +8,5 @@ export const tazaValidator = Joi.object({
       modelo: Joi.string().required(),
       material: Joi.string().required(),
       piezas: Joi.number().min(1).required(),
+      precio: Joi.number().min(0.01).required()
   });
